@@ -1,6 +1,10 @@
 # Badass Elm 
 Code to help people get Badass at Elm. 
 
+To run the app: 
+
+    npm install
+    gulp
 
 # References 
 
