@@ -1,4 +1,11 @@
-{
+{ 
+  "name": "badass-elm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "author": "Petre Damoc",
+  "license": "MIT",
+
   "devDependencies": {
     "del": "^2.2.0",
     "gulp": "^3.9.1",

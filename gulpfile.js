@@ -7,6 +7,9 @@ var rename = require("gulp-rename");
 var gutil = require("gulp-util");
 var browserSync    = require('browser-sync').create()
 
+var vulcanize = require('gulp-vulcanize');
+var minifyInline = require('gulp-minify-inline');
+
 // builds elm files and static resources (i.e. html and css) from src to dist folder
 var paths = {
   dest: './dist',
@@ -14,6 +17,7 @@ var paths = {
   elm: './src/*.elm',
   main_elm: './src/Main.elm',
   index: './assets/index.html',
+  elements : './src/elements.html',
   staticAssets: './assets/*.{png,js,jpg,css,webm}'
 };
 
@@ -43,6 +47,13 @@ gulp.task('staticAssets', function() {
     .pipe(gulp.dest(paths.dest_assets));
 });
 
+gulp.task('copyWC', function() {
+  return gulp.src([
+      'bower_components/webcomponentsjs/webcomponents-lite.min.js'
+     ])
+    .pipe(gulp.dest(paths.dest_assets));
+});
+
 gulp.task('elm-watch', ['elm-bundle'], function (cb) {
     browserSync.reload();
     cb();
@@ -58,6 +69,7 @@ gulp.task('watch', function() {
 
   gulp.watch(paths.elm, ['elm-watch']);
   gulp.watch(paths.index, ['index']);
+  gulp.watch(paths.elements, ['vulcanize']);
   gulp.watch(paths.staticAssets, ['elm-bundle', 'staticAssets']);
 
 });
@@ -69,6 +81,19 @@ gulp.task('elm-bundle', ['elm-init'], function(){
 
 });
 
-gulp.task('build', ['elm-bundle', 'staticAssets', 'index']);
+gulp.task('vulcanize', function() {
+  return gulp.src('src/elements.html')
+    .pipe(vulcanize({
+      stripComments: true,
+      inlineScripts: true,
+      inlineCss: true
+    }))
+    .pipe(minifyInline())
+    .pipe(gulp.dest(paths.dest_assets));
+});
+
+
+
+gulp.task('build', ['elm-bundle', 'staticAssets', 'copyWC', 'index', 'vulcanize']);
 gulp.task('dev', ['build', 'watch']);
 gulp.task('default', ['dev']);
