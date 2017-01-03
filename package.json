@@ -1,11 +1,11 @@
-{ 
+{
   "name": "badass-elm",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
   "author": "Petre Damoc",
   "license": "MIT",
-
+  "repository": "https://github.com/pdamoc/badass-elm.git",
   "devDependencies": {
     "del": "^2.2.0",
     "gulp": "^3.9.1",
@@ -16,10 +16,14 @@
   },
   "scripts": {
     "dev": "gulp clean && gulp dev",
-    "build": "gulp clean && gulp build"
+    "build": "gulp clean && gulp build",
+    "postinstall": "bower install && elm-package install -y"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
+    "browser-sync": "^2.18.5",
+    "gulp-minify-inline": "^0.2.1",
+    "gulp-vulcanize": "^6.1.0",
     "jsonwebtoken": "^7.1.6",
     "lodash": "^4.13.1"
   }
