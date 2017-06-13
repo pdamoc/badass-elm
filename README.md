@@ -4,7 +4,13 @@ Code to help people get Badass at Elm.
 To run the app: 
 
     npm install
-    gulp
+    npm start 
+
+To build the app 
+
+    npm run build 
+
+The built app will be available in `docs` folder
 
 # References 
 
