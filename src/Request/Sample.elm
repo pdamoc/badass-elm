@@ -8,4 +8,4 @@ import Json.Decode as Decode
 loadChapters : Http.Request (List Chapter)
 loadChapters =
     Decode.field "chapters" (Decode.list Sample.chapterDecoder)
-        |> Http.get "/data.json"
+        |> Http.get "data.json"
