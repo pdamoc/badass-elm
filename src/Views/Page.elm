@@ -55,7 +55,7 @@ viewFooter =
             [ i
                 [ class "ion-social-github" ]
                 []
-            , text "Fork on GitHub"
+            , text " Fork on GitHub"
             ]
         ]
 

@@ -1,8 +1,15 @@
 {
     "chapters": [
         { "title": "Introduction"
-        , "content": "Intro"
-        , "samples" : []
+        , "content": "# Intro"
+        , "samples" : [
+            { "title" : "Hello, World!"
+            , "description" : "An Elm program that outputs \"Hello, World!\""
+            , "content" : "An Elm program that outputs \"Hello, World!\""
+            , "ellie-id" : "3t2j6LVyWkGa1/0"
+            }
+
+        ]
         }
     ]
 }

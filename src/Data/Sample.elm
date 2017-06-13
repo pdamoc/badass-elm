@@ -1,7 +1,8 @@
-module Data.Sample exposing (Chapter, Sample, chapterDecoder)
+module Data.Sample exposing (Chapter, Sample, chapterDecoder, getAt)
 
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline exposing (decode, required, custom, hardcoded)
+import List.Extra
 
 
 type alias Chapter =
@@ -11,11 +12,17 @@ type alias Chapter =
     }
 
 
+getAt : Int -> List Chapter -> Chapter
+getAt idx list =
+    List.Extra.getAt idx list
+        |> Maybe.withDefault (Chapter "Empty" "noContent" [])
+
+
 type alias Sample =
     { title : String
     , description : String
     , content : String
-    , ellieLink : String
+    , ellieId : String
     }
 
 
@@ -33,4 +40,4 @@ sampleDecoder =
         |> required "title" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))
         |> required "description" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))
         |> required "content" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))
-        |> required "ellieLink" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))
+        |> required "ellie-id" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))

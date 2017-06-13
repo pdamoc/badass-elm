@@ -1,7 +1,72 @@
 // BOOTSTRAP IMPORTS
 @import '~bootstrap/scss/bootstrap';
 
- 
+.search {
+	position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    display: -ms-flexbox;
+    display: flex;
+    width: 300px;
+    height: 3rem;
+    background: #eee;
+    border-bottom: 1px solid #d7d7d7;
+    border-right: 1px solid #d7d7d7;
+}
+
+.sidebar {
+ 	position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-top: 3rem;
+    background: #f9f9f9;
+    background-clip: content-box;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+}
+
+
+.list {
+	width: 300px;
+	margin: 0;
+    padding: 0;
+    list-style: none;
+    box-shadow: inset -1px 0 #e1e1e1;
+}
+
+.list-item {
+	display: block;
+    position: relative;
+    padding: .25rem .75rem;
+    line-height: 1.5rem;
+    font-size: .875rem;
+    cursor: pointer;
+    background: #f9f9f9;
+    box-shadow: inset -1px 0 #e1e1e1;
+}
+
+.list-item:hover, .list-item.chapter:hover {
+    background: #ddd;
+}
+
+.list-item.sample {
+	padding-left: 1.25rem;
+}
+
+.list-item.chapter {
+	background: #eee;
+}
+
+.content {
+	margin-left: 320px;
+	padding:15px;
+}
+
 .footer-fork{
 	position:fixed;
 	bottom:0;
