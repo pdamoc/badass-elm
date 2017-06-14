@@ -5,21 +5,21 @@ module Page.Home exposing (view, update, Model, Msg, init)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, href, id, placeholder, attribute, classList)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput)
 import Http
 import Task exposing (Task)
 
 
 -- APP imports
 
-import Data.Sample exposing (Chapter, Sample, getAt)
+import Data.Sample exposing (Chapter, Sample, getAt, filterChapters, selectSample, safeHead)
 import Data.Session exposing (Session)
 import Request.Sample
 import Page.Errored as Errored exposing (PageLoadError, pageLoadError)
 import Views.Page as Page
 import Util exposing ((=>))
 import Views.Assets exposing (ellieFrame)
-import Views.Widgets exposing (markdown)
+import Views.Widgets exposing (markdown, ionIcon)
 
 
 -- MODEL
@@ -28,6 +28,7 @@ import Views.Widgets exposing (markdown)
 type alias Model =
     { chapters : List Chapter
     , selected : ( Chapter, Maybe Sample )
+    , searchField : String
     }
 
 
@@ -44,6 +45,7 @@ init session =
         initModel chapters =
             { chapters = chapters
             , selected = ( getAt 0 chapters, Nothing )
+            , searchField = ""
             }
     in
         Task.map initModel loadChapters
@@ -108,12 +110,26 @@ viewSidebar model =
                 ++ [ chapterLink chapter ]
                 ++ List.foldl (sampleToItem chapter) [] chapter.samples
 
+        filteredChapters =
+            case model.searchField of
+                "" ->
+                    model.chapters
+
+                search ->
+                    filterChapters search model.chapters
+
         items =
-            List.foldl chapterToItems [] model.chapters
+            List.foldl chapterToItems [] filteredChapters
     in
         section [ class "sidebar" ]
             [ div [ class "list" ]
-                (div [ class "sidebar_head" ] [ h3 [] [ text "Badass Elm" ] ] :: items)
+                (div [ class "sidebar_head" ]
+                    [ h3 [ class "clearfix" ] [ text "Badass Elm" ]
+                    , div [ class "search-wrapper" ]
+                        [ input [ onInput Filter ] [] ]
+                    ]
+                    :: items
+                )
             , div [ class "footer-clear" ] []
             ]
 
@@ -141,6 +157,7 @@ viewSample sample =
 
 type Msg
     = Select Chapter (Maybe Sample)
+    | Filter String
 
 
 update : Session -> Msg -> Model -> ( Model, Cmd Msg )
@@ -148,3 +165,15 @@ update session msg model =
     case msg of
         Select idx sample ->
             { model | selected = ( idx, sample ) } => Cmd.none
+
+        Filter str ->
+            let
+                selected =
+                    case str of
+                        "" ->
+                            ( safeHead model.chapters, Nothing )
+
+                        _ ->
+                            selectSample str model.chapters
+            in
+                { model | searchField = str, selected = selected } => Cmd.none

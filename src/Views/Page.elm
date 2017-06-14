@@ -6,6 +6,7 @@ module Views.Page exposing (frame, ActivePage(..), bodyId)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Data.User as User exposing (User)
+import Views.Widgets exposing (ionIcon)
 
 
 {-| Determines which navbar link (if any) will be rendered as active.
@@ -52,9 +53,7 @@ viewFooter =
             , target "_blank"
             , class "footer-fork"
             ]
-            [ i
-                [ class "ion-social-github" ]
-                []
+            [ ionIcon "ion-social-github"
             , text " Fork on GitHub"
             ]
         ]

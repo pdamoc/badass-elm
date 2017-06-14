@@ -1,4 +1,4 @@
-module Views.Widgets exposing (markdown)
+module Views.Widgets exposing (markdown, ionIcon)
 
 import Markdown exposing (defaultOptions)
 import Html exposing (Html)
@@ -10,3 +10,8 @@ markdown =
     Markdown.toHtmlWith
         { defaultOptions | defaultHighlighting = Just "elm" }
         [ Attr.class "info-content" ]
+
+
+ionIcon : String -> Html msg
+ionIcon id =
+    Html.i [ Attr.class id ] []
