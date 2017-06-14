@@ -8,7 +8,6 @@ import Html.Attributes exposing (class, href, id, placeholder, attribute, classL
 import Html.Events exposing (onClick)
 import Http
 import Task exposing (Task)
-import Markdown
 
 
 -- APP imports
@@ -20,6 +19,7 @@ import Page.Errored as Errored exposing (PageLoadError, pageLoadError)
 import Views.Page as Page
 import Util exposing ((=>))
 import Views.Assets exposing (ellieFrame)
+import Views.Widgets exposing (markdown)
 
 
 -- MODEL
@@ -73,9 +73,17 @@ view session model =
 
 viewSidebar model =
     let
+        ( selectedChapter, selectedSample ) =
+            model.selected
+
         sampleLink chapter sample =
             a
-                [ class "list-item sample"
+                [ class
+                    (if chapter == selectedChapter && selectedSample == (Just sample) then
+                        "list-item sample active"
+                     else
+                        "list-item sample"
+                    )
                 , onClick (Select chapter (Just sample))
                 ]
                 [ text sample.title ]
@@ -85,7 +93,12 @@ viewSidebar model =
 
         chapterLink chapter =
             a
-                [ class "list-item chapter"
+                [ class
+                    (if chapter == selectedChapter && selectedSample == Nothing then
+                        "list-item chapter active"
+                     else
+                        "list-item chapter"
+                    )
                 , onClick (Select chapter Nothing)
                 ]
                 [ text chapter.title ]
@@ -100,22 +113,25 @@ viewSidebar model =
     in
         section [ class "sidebar" ]
             [ div [ class "list" ]
-                (div [ class "search" ] [] :: items)
+                (div [ class "sidebar_head" ] [ h3 [] [ text "Badass Elm" ] ] :: items)
+            , div [ class "footer-clear" ] []
             ]
 
 
 viewChapter chapter =
     section [ class "content" ]
         [ h1 [] [ text chapter.title ]
-        , Markdown.toHtml [ class "info-content" ] chapter.content
+        , markdown chapter.content
+        , div [ class "footer-clear" ] []
         ]
 
 
 viewSample sample =
     section [ class "content" ]
         [ h1 [] [ text sample.title ]
-        , Markdown.toHtml [ class "info-content" ] sample.content
+        , markdown sample.content
         , ellieFrame sample.ellieId
+        , div [ class "footer-clear" ] []
         ]
 
 

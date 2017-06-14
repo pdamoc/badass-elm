@@ -1,12 +1,27 @@
 {
     "chapters": [
         { "title": "Introduction"
-        , "content": "# Intro"
+        , "content": "Hi and welcome to Badass Elm!\n\nThe main idea behind this project is that you could learn Elm by looking at a large collection of example, letting your brain extract the relevant patterns.\n\nThe main idea comes from Kathy Sierra's wonderful `Badass` book & talks (see References). \n\nElm is a simple language and you should be able to learn it quickly. The only real initial challenge is to get accustomed to its syntax which might be unfamiliar if you never had any exposure to the ML family of languages (OCaml, Haskell, etc.)\n\nAll the examples will use the Ellie app and you are encouraged to play and tinker with them, fork them and make them your own. \n\nYou should have [The Elm Guide](https://guide.elm-lang.org/) open in another tab in another tab. The code you will find here is designed to complement the information you can find in the guide. \n\n*Have fun!*\n\n### References \n\n\n- [Badass: Making Users Awesome - the book](http://seriouspony.com/badass-users-the-book/)\n- [Building the minimum Badass User - Part 1](https://vimeo.com/54469442) \n- [Building the minimum Badass User - Part 2](https://vimeo.com/81625882)\n- [Making Badass Developers](https://www.youtube.com/watch?v=FKTxC9pl-WM)"
         , "samples" : [
             { "title" : "Hello, World!"
             , "description" : "An Elm program that outputs \"Hello, World!\""
-            , "content" : "An Elm program that outputs \"Hello, World!\""
-            , "ellie-id" : "3t2j6LVyWkGa1/0"
+            , "content" : "This is the simplest Elm program. It outputs \"Hello, World!\"\n\nThe `main` of an Elm app can be either an `Html` node or a program (more about this later). The simplest `Html` node is a `text` node. This is created using the function `text` imported from the `Html` library. `text` is a function that takes a `String` and returns a text node. \n\nUnlike in `python` or `javascript`, applying a function to a set of arguments does not require parentheses. \n\nClick the `Results` tab from Ellie to see the output. "
+            , "ellie-id" : "3t2j6LVyWkGa1/2"
+            },
+            { "title" : "Hello, Numbers!"
+            , "description" : "Playing with Numbers"
+            , "content" : "In this example we see how to work with `numbers`. \n\nOn lines 8 and 9 we define a function that takes a number and divides it by 2. \n\nOn line 13 we use the function `sqrt` to computer the square root of the sum of the two sides raised to the power 2. Because `sqrt` takes only one  argument we need to group the rest of the operations using parentheses. Without the parentheses the result would be `(sqrt c1) ^2 + c2 ^2`\n\nSomething similar happens on lines 19, 20 and 21. `text` takes only strings and if we give it a number the compiler will give us an error message. We need to convert the number using `toString` but we also need to make explicit the fact that the conversion happens first and then the result is fed into `text`. "
+            , "ellie-id" : "3tnjWbk499ya1/0"
+            },
+            { "title" : "Hello, Lists!"
+            , "description" : "Playing with Lists"
+            , "content" : "Here we have the syntax for declaring lists and examples of using few of the functions from the [List](http://package.elm-lang.org/packages/elm-lang/core/latest/List) package. \n\nWe also define a couple of helper functions that allow us to convert a list of strings into a piece of html that will display each string on its own line. \n\n`(List.map line lines)` converts the list of lines into a list of line representations by applying the `line` helper function on each string. \n\n"
+            , "ellie-id" : "3tnLfV4pndpa1/0"
+            },
+            { "title" : "Goodbye null, hello Maybe!"
+            , "description" : "Introduction to Maybe."
+            , "content" : "Starting on line 8 we define a function that would receive a list of strings and would return the first element or the `head` of that list. \n\nWhen requesting the first element of a list we need to take into account the fact that the list might be empty. This is why `List.head` does not return the first element of that list but a `Maybe`. This is like a wrapper that encapsulates the fact that requesting the first element might fail. \n\nWhen we request the first element of an empty list, `List.head` returns `Nothing`. If there are elements in the list it returns `Just first`. \n\nThe `case` expression takes this evaluation `(List.head list)` and then pattern matches the result.\n\nBecause the list is such a frequently used type, we can also implement the functionality by pattern matching directly on the list. `headSimpler` function shows how this is done. \n\nOn line 37 you can also see the syntax for end-of-line comments and on lines 44-46 the syntax for block comments. "
+            , "ellie-id" : "3tnLfV4pndpa1/3"
             }
 
         ]
