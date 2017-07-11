@@ -1,4 +1,4 @@
-module Util exposing ((=>), caselessContain)
+module Util exposing ((=>), findTerms)
 
 
 (=>) : a -> b -> ( a, b )
@@ -12,6 +12,11 @@ meaning you can use it at the end of a pipeline and have the precedence work out
 infixl 0 =>
 
 
-caselessContain : String -> String -> Bool
-caselessContain term str =
-    String.contains (String.toLower term) (String.toLower str)
+findTerms : String -> String -> Bool
+findTerms terms str =
+    let
+        loweredStr =
+            (String.toLower str)
+    in
+        List.map String.toLower (String.words terms)
+            |> List.all (\term -> String.contains term loweredStr)

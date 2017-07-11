@@ -12,7 +12,7 @@ module Data.Sample
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline as Pipeline exposing (decode, required, custom, hardcoded)
 import List.Extra
-import Util exposing (caselessContain)
+import Util exposing (findTerms)
 
 
 type alias Chapter =
@@ -56,14 +56,14 @@ sampleDecoder =
 noResults : Chapter
 noResults =
     { title = "No sample matching"
-    , content = "Could not find any example matching your search"
+    , content = "Could not find any example matching your terms"
     , samples = []
     }
 
 
 filterChapters : String -> List Chapter -> List Chapter
-filterChapters search chapters =
-    case filterChapters_ search chapters of
+filterChapters terms chapters =
+    case filterChapters_ terms chapters of
         [] ->
             -- there should always be something to display.
             [ noResults ]
@@ -73,20 +73,20 @@ filterChapters search chapters =
 
 
 sampleShouldStay : String -> Sample -> Bool
-sampleShouldStay search sample =
-    caselessContain search sample.title
-        || caselessContain search sample.content
+sampleShouldStay terms sample =
+    findTerms terms sample.title
+        || findTerms terms sample.content
 
 
 chapterShouldStay : String -> Chapter -> Maybe Chapter
-chapterShouldStay search chapter =
+chapterShouldStay terms chapter =
     let
         samples =
-            List.filter (sampleShouldStay search) chapter.samples
+            List.filter (sampleShouldStay terms) chapter.samples
     in
         if
-            caselessContain search chapter.title
-                || caselessContain search chapter.content
+            findTerms terms chapter.title
+                || findTerms terms chapter.content
                 || (List.length samples > 0)
         then
             Just { chapter | samples = samples }
@@ -95,43 +95,45 @@ chapterShouldStay search chapter =
 
 
 filterChapters_ : String -> List Chapter -> List Chapter
-filterChapters_ search chapters =
-    List.filterMap (chapterShouldStay search) chapters
+filterChapters_ terms chapters =
+    List.filterMap (chapterShouldStay terms) chapters
 
 
-findFirstSample search samples =
+findFirstSample : String -> List Sample -> Maybe Sample
+findFirstSample terms samples =
     case samples of
         [] ->
             Nothing
 
         x :: xs ->
             if
-                caselessContain search x.title
-                    || caselessContain search x.content
+                findTerms terms x.title
+                    || findTerms terms x.content
             then
                 Just x
             else
-                findFirstSample search xs
+                findFirstSample terms xs
 
 
-findFirstMatch search chapter =
+findFirstMatch : String -> Chapter -> ( Chapter, Maybe Sample )
+findFirstMatch terms chapter =
     if
-        caselessContain search chapter.title
-            || caselessContain search chapter.content
+        findTerms terms chapter.title
+            || findTerms terms chapter.content
     then
         ( chapter, Nothing )
     else
-        ( chapter, findFirstSample search chapter.samples )
+        ( chapter, findFirstSample terms chapter.samples )
 
 
 selectSample : String -> List Chapter -> ( Chapter, Maybe Sample )
-selectSample search chapters =
-    case (filterChapters_ search chapters) of
+selectSample terms chapters =
+    case (filterChapters_ terms chapters) of
         [] ->
             ( noResults, Nothing )
 
         x :: xs ->
-            findFirstMatch search x
+            findFirstMatch terms x
 
 
 safeHead : List Chapter -> Chapter

@@ -1,37 +1,6 @@
-// BOOTSTRAP IMPORTS
-@import '~bootstrap/scss/bootstrap';
+@import 'base'; 
 @import 'hljs';
 
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic|Source+Code+Pro);
-
-* {
-     box-sizing: border-box;
-}
-
-body {
-  font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
-  color: #293c4b;
-}
-
-pre {
-  margin: 0;
-  padding: 10px;
-  background-color: rgb(254,254,254);
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgb(245,245,245);
-  border-radius: 6px;
-  overflow-x: auto;
-}
-
-a {
-  color: #1184CE;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-  color: rgb(234,21,122);
-}
 
 .sidebar_head {
 	position: absolute;
@@ -101,33 +70,6 @@ a:hover {
     }
 }
 
-.sidebar::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 10px
-}
-
-.sidebar::-webkit-scrollbar-button {
-    display: none
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: #fff
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: #d2d2d2;
-    background-clip: padding-box;
-    border: 3px solid #fff;
-    border-radius: 5px
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover,
-.sidebar::-webkit-scrollbar-thumb:active {
-    background-color: #aaa;
-    border-width: 2px
-}
-
 .list {
 	width: 300px;
 	margin: 0;
@@ -184,33 +126,6 @@ a:hover {
         padding-top: 0;
         top: 3rem
     }
-}
-
-.content::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 10px
-}
-
-.content::-webkit-scrollbar-button {
-    display: none
-}
-
-.content::-webkit-scrollbar-track {
-    background: #fff
-}
-
-.content::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: #d2d2d2;
-    background-clip: padding-box;
-    border: 3px solid #fff;
-    border-radius: 5px
-}
-
-.content::-webkit-scrollbar-thumb:hover,
-.content::-webkit-scrollbar-thumb:active {
-    background-color: #aaa;
-    border-width: 2px
 }
 
 .footer-fork{
